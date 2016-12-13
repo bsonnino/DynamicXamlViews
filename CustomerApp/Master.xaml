@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Country" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Height="25"
+                     VerticalAlignment="Center" Margin="5,3" Width="250" Text="{Binding SearchText, Mode=TwoWay}"  />
+            <Button Content="Search" Width="75" Height="25" Margin="10,5" VerticalAlignment="Center" 
+                    Command="{Binding SearchCommand}" />
+        </StackPanel>
+        <DataGrid AutoGenerateColumns="False" x:Name="master" CanUserAddRows="False" CanUserDeleteRows="True" Grid.Row="1"
+                  ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="customerIDColumn" Binding="{Binding Path=CustomerId}" Header="Customer ID" Width="80" />
+                <DataGridTextColumn x:Name="companyNameColumn" Binding="{Binding Path=CompanyName,ValidatesOnDataErrors=True}" Header="Company Name" Width="300" />
+                <DataGridTextColumn x:Name="cityColumn" Binding="{Binding Path=City}" Header="City" Width="100" />
+                <DataGridTextColumn x:Name="countryColumn" Binding="{Binding Path=Country}" Header="Country" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
