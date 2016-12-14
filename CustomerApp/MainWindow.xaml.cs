@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using System.Windows.Markup;
+using System;
+using System.Linq;
 
 namespace CustomerApp
 {
@@ -15,6 +17,12 @@ namespace CustomerApp
         {
             InitializeComponent();
             DataContext = new CustomersViewModel();
+            LoadStyles();
+        }
+
+        private void LoadStyles()
+        {
+            StylesCombo.ItemsSource = Directory.EnumerateFiles("Styles","*.xaml").Select(s => s.Substring(7));
         }
 
         private void SelectedViewChanged(object sender, SelectionChangedEventArgs e)
@@ -42,6 +50,20 @@ namespace CustomerApp
             {
                 return XamlReader.Load(fs) as FrameworkElement;
             }
+        }
+
+        private void SelectedStyleChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0)
+                    return;
+                using (FileStream fs = new FileStream($"Styles\\{e.AddedItems[0]}", FileMode.Open))
+                {
+                    var dict = XamlReader.Load(fs) as ResourceDictionary;
+                    if (dict != null)
+                    {
+                        Application.Current.Resources.MergedDictionaries.Add(dict);
+                    }
+                }
         }
     }
 }

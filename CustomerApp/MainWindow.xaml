@@ -16,6 +16,8 @@
             <ComboBoxItem>Detail</ComboBoxItem>
             <ComboBoxItem>Master</ComboBoxItem>
         </ComboBox>
+        <ComboBox x:Name="StylesCombo" Height="30" Width="200" 
+                  SelectionChanged="SelectedStyleChanged" HorizontalAlignment="Right" Margin="5" />
         <ContentControl Grid.Row="1" x:Name="MainContent"/>
     </Grid>
 </Window>
